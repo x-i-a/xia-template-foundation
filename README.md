@@ -21,8 +21,10 @@ graph TD
 ## Usage
 ### Preparation
 
-### Module Operations
-make init-module module_class=`module_class` package=`package`
+### Initialization of modules
+Initialization of the module to be used in cosmos
+`make init-module module_uri=<package_name>@<version>/<module_name>"`
 
-### Application Operations
-make create-app app_name=`application_name`
+### Activation of modules
+Activation of the module to be used in foundation
+`make init-module module_uri=<package_name>@<version>/<module_name>"`
