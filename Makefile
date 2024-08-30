@@ -1,4 +1,4 @@
-.PHONY: all bigbang birth apply init-module create-application
+.PHONY: all init plan apply destroy init-module activate-module
 
 all:
 	@echo "Specify a command to run"
@@ -8,38 +8,34 @@ init:
 	until [ -f .venv/bin/python3 ]; do sleep 1; done; \
 	until [ -f .venv/bin/activate ]; do sleep 1; done;
 	. .venv/bin/activate; \
-	pip install PyYAML xia-framework keyring setuptools wheel; \
+    pip install git+https://github.com/x-i-a/xia-framework.git; \
+	pip install PyYAML keyring setuptools wheel; \
     pip install keyrings.google-artifactregistry-auth; \
 
-bigbang: init
-	@if [ -z "$(realm_project)" ]; then \
-		echo "Realm project not specified. Usage: make bigbang realm_project=<realm_project>"; \
-	else \
-		python main.py bigbang -p $(realm_project); \
-	fi
-
-birth: init
-	@if [ -z "$(foundation_name)" ]; then \
-		echo "Foundation name not specified. Usage: make birth foundation_name=<foundation_name>"; \
-	else \
-	    . .venv/bin/activate; \
-		python main.py birth -n $(foundation_name); \
-	fi
+plan: init
+	@. .venv/bin/activate; \
+	python -m xia_framework.foundation plan
 
 apply: init
 	@. .venv/bin/activate; \
-	python main.py prepare
+	python -m xia_framework.foundation apply
+
+destroy: init
+	@. .venv/bin/activate; \
+	python -m xia_framework.foundation destroy
 
 init-module: init
-	@if [ -z "$(module_class)" ] || [ -z "$(package)" ]; then \
-		echo "Module name not specified. Usage: make init-module module_class=<module_class> package=<package>"; \
+	@. .venv/bin/activate; \
+	if [ -z "$(module_uri)" ] ; then \
+		echo "Module URI not specified. Usage: make init-module module_uri=<package_name>@<version>/<module_name>"; \
 	else \
-		python main.py init-module -m $(module_class) -p $(package); \
+		python -m xia_framework.foundation init-module -n $(module_uri); \
 	fi
 
-create-app: init
-	@if [ -z "$(app_name)" ]; then \
-		echo "Application name not specified. Usage: make create-app app_name=<app_name>"; \
+activate-module: init
+	@. .venv/bin/activate; \
+	if [ -z "$(module_uri)" ] ; then \
+		echo "Module URI not specified. Usage: make activate-module module_uri=<package_name>@<version>/<module_name>"; \
 	else \
-		python main.py create-app $(app_name); \
+		python -m xia_framework.foundation activate-module -n $(module_uri); \
 	fi
