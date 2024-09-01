@@ -3,6 +3,11 @@ settings:
 #  cosmos_name:
 #   realm_name:
 #   foundation_name:
+applications:
+  default_visibility: public
+#  default_repository_owner:
+  default_template_owner: x-i-a
+  default_template_name: xia-template-application
 environments:
 #  dev:
 #    match_branch: refs/heads/main
