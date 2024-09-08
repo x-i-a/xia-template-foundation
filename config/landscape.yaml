@@ -8,7 +8,7 @@ applications:
 #  default_repository_owner:
   default_template_owner: x-i-a
   default_template_name: xia-template-application
-environments:
+app_environments:
   dev:
     match_branch: refs/heads/main
   sit:

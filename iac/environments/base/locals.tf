@@ -1,7 +1,7 @@
 locals {
   landscape = yamldecode(file(var.landscape_file))
   modules = yamldecode(file(var.modules_file))
-  environment_dict = lookup(local.landscape, "environments", {})
+  environment_dict = lookup(local.landscape, "app_environments", {})
 }
 
 locals {
