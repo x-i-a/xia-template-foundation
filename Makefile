@@ -1,4 +1,4 @@
-.PHONY: all init plan apply destroy init-config init-module activate-module
+.PHONY: all init plan apply destroy unlock init-config init-module activate-module
 
 modules ?= ""
 
@@ -25,6 +25,10 @@ apply: init
 destroy: init
 	@. .venv/bin/activate; \
 	python -m xia_framework.foundation destroy
+
+unlock: init
+	@. .venv/bin/activate; \
+	python -m xia_framework.foundation unlock
 
 init-config: init
 	@. .venv/bin/activate; \
